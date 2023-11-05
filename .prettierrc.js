@@ -1,5 +1,4 @@
 module.exports = {
-  arrowParens: 'always',
   bracketSpacing: true,
   semi: false,
   trailingComma: 'none',
