@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import Theme from './Theme'
 import MobileNavbar from './MobileNavbar'
-// import GlobalSerach from '../search/GlobalSerach'
+import GlobalSerach from '../search/GlobalSerach'
 
 const Navbar = () => {
   return (
@@ -15,7 +15,7 @@ const Navbar = () => {
           Next <span className="text-primary-500">OverFlow</span>
         </p>
       </Link>
-      GlobalSerach
+      <GlobalSerach />
       <div className="flex-between gap-5">
         <Theme />
         <SignedIn>
@@ -23,7 +23,7 @@ const Navbar = () => {
             afterSignOutUrl="/"
             appearance={{
               elements: {
-                avatarBox: 'h-10 w-10'
+                avatarBox: 'h-8 w-8'
               },
               variables: {
                 colorPrimary: '#ff7000'
