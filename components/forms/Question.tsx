@@ -22,10 +22,13 @@ import { Button } from '@/components/ui/button'
 import { QuestionSchema } from '@/lib/validation'
 import { Badge } from '../ui/badge'
 
+import { Editor } from '@tinymce/tinymce-react'
+
 const type: any = 'create'
 
 const Question = () => {
   const editorRef = useRef(null)
+
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<z.infer<typeof QuestionSchema>>({
@@ -108,8 +111,42 @@ const Question = () => {
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Detailed explanation of your problem <span className="text-primary-500">*</span>
               </FormLabel>
-              {/* TODO: Add editor component */}
-              <FormControl className="mt-3.5"></FormControl>
+              {/* MARK: Add editor component */}
+              <FormControl className="mt-3.5">
+                <Editor
+                  apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
+                  onInit={(_, editor: any) => (editorRef.current = editor)}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
+                  initialValue=""
+                  init={{
+                    height: 350,
+                    menubar: false,
+                    plugins: [
+                      'advlist',
+                      'autolink',
+                      'lists',
+                      'link',
+                      'image',
+                      'charmap',
+                      'preview',
+                      'anchor',
+                      'searchreplace',
+                      'visualblocks',
+                      'codesample',
+                      'fullscreen',
+                      'insertdatetime',
+                      'media',
+                      'table'
+                    ],
+                    toolbar:
+                      'undo redo | ' +
+                      'codesample | bold italic forecolor | alignleft aligncenter |' +
+                      'alignright alignjustify | bullist numlist',
+                    content_style: 'body { font-family:Inter; font-size:16px }'
+                  }}
+                />
+              </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Introduce the problem and expand on what you put in the title. Minimum 20
                 characters.
