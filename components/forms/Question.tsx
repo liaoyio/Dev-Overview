@@ -23,6 +23,8 @@ import { QuestionSchema } from '@/lib/validation'
 import { Badge } from '../ui/badge'
 
 import { Editor } from '@tinymce/tinymce-react'
+import { create } from 'domain'
+import { createQuestion } from '@/lib/actions/question.action'
 
 const type: any = 'create'
 
@@ -40,9 +42,14 @@ const Question = () => {
     }
   })
 
-  function onSubmit(values: z.infer<typeof QuestionSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionSchema>) {
     setIsSubmitting(true)
     try {
+      await createQuestion(values)
+
+      // make an async call to your API -> create a question
+      // contain all from data
+      // navigate to home page
     } catch (error) {
     } finally {
       setIsSubmitting(false)
