@@ -32,9 +32,11 @@ const Metric = ({ imgUrl, alt, value, title, href, textStyles, isAuthor }: Matri
   )
 
   if (href) {
-    ;<Link href={href} className="flex-center gap-1">
-      {matricContent}
-    </Link>
+    return (
+      <Link href={href} className="flex-center gap-1">
+        {matricContent}
+      </Link>
+    )
   }
   return <div className="flex-center flex-wrap gap-1">{matricContent}</div>
 }
