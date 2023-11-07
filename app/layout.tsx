@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from 'next/font/google'
 import { Metadata } from 'next'
 import { ThemeProvider } from '@/context/ThemeProvider'
 import '@/styles/globals.css'
+import '@/styles/prism.css'
 
 const inter = Inter({
   subsets: ['latin'],

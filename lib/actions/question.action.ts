@@ -6,7 +6,7 @@ import Tag from '@/database/tag.model'
 import User from '@/database/user.model'
 
 import { connectToDatabase } from '../mongoose'
-import type { CreateQuestionParams, GetQuestionsParams } from './shared'
+import type { CreateQuestionParams, GetQuestionByIdParams, GetQuestionsParams } from './shared'
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
@@ -57,6 +57,27 @@ export async function createQuestion(params: CreateQuestionParams) {
 
     // 重新验证路径
     revalidatePath(path)
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
+
+export async function getQuestionById(params: GetQuestionByIdParams) {
+  try {
+    connectToDatabase()
+
+    const { questionId } = params
+
+    const question = await Question.findById(questionId)
+      .populate({ path: 'tags', model: Tag, select: '_id name' })
+      .populate({
+        path: 'author',
+        model: User,
+        select: '_id clerkId name picture'
+      })
+
+    return question
   } catch (error) {
     console.log(error)
     throw error
