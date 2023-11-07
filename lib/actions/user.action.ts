@@ -4,10 +4,21 @@ import User from '@/database/user.model'
 import Question from '@/database/question.model'
 import { connectToDatabase } from '../mongoose'
 
-import { CreateUserParams, DeleteUserParams, UpdateUserParams } from './shared'
+import { CreateUserParams, DeleteUserParams, UpdateUserParams, GetAllUsersParams } from './shared'
 import { revalidatePath } from 'next/cache'
 
 import { IUser } from '@/database/user.model'
+
+export async function getAllUSers() {
+  try {
+    connectToDatabase()
+    const users = await User.find({}).sort({ createdAt: -1 })
+    return { users }
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
 
 export async function getUserById(params: any): Promise<IUser> {
   try {
