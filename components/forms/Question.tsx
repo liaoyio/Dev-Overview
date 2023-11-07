@@ -3,10 +3,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useRef, useState } from 'react'
 import Image from 'next/image'
-
+import { Editor } from '@tinymce/tinymce-react'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
-
 import {
   Form,
   FormControl,
@@ -16,22 +15,24 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
-
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { QuestionSchema } from '@/lib/validation'
 import { Badge } from '../ui/badge'
-
-import { Editor } from '@tinymce/tinymce-react'
-import { create } from 'domain'
 import { createQuestion } from '@/lib/actions/question.action'
+import { useRouter, usePathname } from 'next/navigation'
 
 const type: any = 'create'
 
-const Question = () => {
-  const editorRef = useRef(null)
+interface Props {
+  mongoUserId: string
+}
 
+const Question = ({ mongoUserId }: Props) => {
+  const editorRef = useRef(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
 
   const form = useForm<z.infer<typeof QuestionSchema>>({
     resolver: zodResolver(QuestionSchema),
@@ -41,15 +42,19 @@ const Question = () => {
       tags: []
     }
   })
-
   async function onSubmit(values: z.infer<typeof QuestionSchema>) {
     setIsSubmitting(true)
     try {
-      await createQuestion(values)
-
       // make an async call to your API -> create a question
-      // contain all from data
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+        path: pathname
+      })
       // navigate to home page
+      router.push('/')
     } catch (error) {
     } finally {
       setIsSubmitting(false)
@@ -94,10 +99,10 @@ const Question = () => {
           name="title"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
-              <FormLabel className="paragraph-semibold text-dark400_light800 mb-2">
+              <FormLabel className="paragraph-semibold text-dark400_light800">
                 Question Title <span className="text-primary-500">*</span>
               </FormLabel>
-              <FormControl>
+              <FormControl className="mt-3.5">
                 <Input
                   className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
                   {...field}
@@ -118,11 +123,13 @@ const Question = () => {
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Detailed explanation of your problem <span className="text-primary-500">*</span>
               </FormLabel>
-              {/* MARK: Add editor component */}
               <FormControl className="mt-3.5">
                 <Editor
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
-                  onInit={(_, editor: any) => (editorRef.current = editor)}
+                  onInit={(evt, editor) => {
+                    // @ts-ignore
+                    editorRef.current = editor
+                  }}
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
@@ -167,10 +174,10 @@ const Question = () => {
           name="tags"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
-              <FormLabel className="paragraph-semibold text-dark400_light800 mb-2">
+              <FormLabel className="paragraph-semibold text-dark400_light800">
                 Tags <span className="text-primary-500">*</span>
               </FormLabel>
-              <FormControl>
+              <FormControl className="mt-3.5">
                 <>
                   <Input
                     className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
