@@ -52,17 +52,15 @@ const QuestionsCard = ({
         ))}
       </div>
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
-        {author && (
-          <Metric
-            imgUrl={author.picture}
-            alt={author.name}
-            value={author.name}
-            title={` - asked ${getTimeStamp(createdAt)}`}
-            href={`/profile/${author.id}`}
-            isAuthor
-            textStyles="body-medium text-dark400_light800"
-          />
-        )}
+        <Metric
+          imgUrl={author.picture}
+          alt={author.name}
+          value={author.name}
+          title={` - asked ${getTimeStamp(createdAt)}`}
+          href={`/profile/${author.id}`}
+          isAuthor
+          textStyles="body-medium text-dark400_light800"
+        />
 
         <Metric
           imgUrl="/assets/icons/like.svg"
