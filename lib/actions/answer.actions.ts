@@ -1,3 +1,4 @@
+'use server'
 import Answer from '@/database/answer.model'
 import { connectToDatabase } from '../mongoose'
 import { CreateAnswerParams, GetAnswersParams } from './shared'
@@ -31,9 +32,11 @@ export async function getAnswers(params: GetAnswersParams) {
 
     const { questionId } = params
 
-    const answer = await Answer.find({ question: questionId })
+    const answers = await Answer.find({ question: questionId })
       .populate('author', '_id clerkId name picture')
       .sort({ createdAt: -1 })
+
+    return { answers }
   } catch (error) {
     console.log(error)
     throw error

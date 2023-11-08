@@ -9,7 +9,7 @@ export interface IAnswer extends Document {
   createdAt: Date
 }
 
-const answerSchema = new Schema({
+const AnswerSchema = new Schema({
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -44,6 +44,6 @@ const answerSchema = new Schema({
   }
 })
 
-const Answer = models.Answer || model('Answer', answerSchema)
+const Answer = models.Answer || model('Answer', AnswerSchema)
 
 export default Answer
