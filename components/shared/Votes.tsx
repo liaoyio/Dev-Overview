@@ -56,6 +56,7 @@ const Votes = ({
           path: pathname
         })
       }
+      // TODO: show toast
       return
     }
 
