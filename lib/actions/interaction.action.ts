@@ -1,9 +1,8 @@
 'use server'
+import { Question, Interaction } from '@/database'
 
-import Question from '@/database/question.model'
 import { connectToDatabase } from '../mongoose'
-import { ViewQuestionParams } from './shared'
-import Interaction from '@/database/interaction.model'
+import type { ViewQuestionParams } from './shared'
 
 export async function viewQuestion(params: ViewQuestionParams) {
   try {

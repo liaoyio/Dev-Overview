@@ -1,11 +1,15 @@
 'use server'
 
-import User from '@/database/user.model'
-import Question from '@/database/question.model'
-import Tag, { ITag } from '@/database/tag.model'
+import { Question, Tag, User } from '@/database'
+import type { ITag } from '@/database/tag.model'
+
+import type {
+  GetAllTagsParams,
+  GetQuestionsByTagIdParams,
+  GetTopInteractedTagsParams
+} from './shared'
 
 import { connectToDatabase } from '../mongoose'
-import { GetAllTagsParams, GetQuestionsByTagIdParams, GetTopInteractedTagsParams } from './shared'
 import { FilterQuery } from 'mongoose'
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
