@@ -160,7 +160,6 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
 export async function deleteQuestion(params: DeleteQuestionParams) {
   try {
     connectToDatabase()
-
     const { questionId, path } = params
 
     await Question.deleteOne({ _id: questionId })
@@ -175,6 +174,7 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
   }
 }
 
+/** 编辑问题 */
 export async function editQuestion(params: EditQuestionParams) {
   try {
     connectToDatabase()

@@ -36,6 +36,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
   const router = useRouter()
   const pathname = usePathname()
 
+  // if type is Edit, parse the question details
   const parsedQuestionDetails = questionDetails ? JSON.parse(questionDetails) : null
 
   const groupedTags = parsedQuestionDetails
@@ -111,7 +112,6 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
 
   const handleTagRemove = (tag: string, field: any) => {
     const newTags = field.value.filter((t: string) => t !== tag)
-
     form.setValue('tags', newTags)
   }
 
@@ -221,6 +221,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                           onClick={() => (type !== 'Edit' ? handleTagRemove(tag, field) : () => {})}
                         >
                           {tag}
+                          {/* 编辑模式下不显示删除按钮 */}
                           {type !== 'Edit' && (
                             <Image
                               src="/assets/icons/close.svg"
