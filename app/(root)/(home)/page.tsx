@@ -8,6 +8,7 @@ import Link from 'next/link'
 
 import { HomePageFilters } from '@/constants/filter'
 import { getSavedQuestions } from '@/lib/actions/user.action'
+import { getQuestions } from '@/lib/actions/question.action'
 import type { SearchParamsProps } from '@/types'
 import { auth } from '@clerk/nextjs'
 
@@ -16,13 +17,18 @@ export default async function Home({ searchParams }: SearchParamsProps) {
 
   if (!userId) return null
 
-  const result = await getSavedQuestions({
+  /*  const result = await getSavedQuestions({
     clerkId: userId,
     searchQuery: searchParams.q
+  }) */
+  const result = await getQuestions({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1
   })
 
   return (
-    <>
+    <div>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
         <h1 className="h1-bold text-dark100_light900">All Questions</h1>
 
@@ -75,6 +81,6 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           />
         )}
       </div>
-    </>
+    </div>
   )
 }
