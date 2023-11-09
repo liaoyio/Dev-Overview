@@ -37,11 +37,9 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
   const pathname = usePathname()
 
   // if type is Edit, parse the question details
-  const parsedQuestionDetails = questionDetails ? JSON.parse(questionDetails) : null
+  const parsedQuestionDetails = questionDetails && JSON.parse(questionDetails || '')
 
-  const groupedTags = parsedQuestionDetails
-    ? parsedQuestionDetails.tags.map((tag: any) => tag.name)
-    : null
+  const groupedTags = parsedQuestionDetails?.tags.map((tag: any) => tag.name)
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionSchema>>({
