@@ -13,11 +13,23 @@ import type {
   QuestionVoteParams
 } from './shared'
 
+import { FilterQuery } from 'mongoose'
+
 export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase()
 
-    const questions = await Question.find({})
+    const { searchQuery } = params
+    const query: FilterQuery<typeof Question> = {}
+
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, 'i') } },
+        { content: { $regex: new RegExp(searchQuery, 'i') } }
+      ]
+    }
+
+    const questions = await Question.find(query)
       .populate({ path: 'tags', model: Tag })
       .populate({ path: 'author', model: User })
       .sort({ createdAt: -1 })
