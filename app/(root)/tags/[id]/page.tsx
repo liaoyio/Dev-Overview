@@ -17,7 +17,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
 
       <div className="mt-11 w-full">
         <LocalSearchbar
-          route="/"
+          route={`/tags/${params.id}`}
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
           placeholder="Search tag questions"
@@ -42,7 +42,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
           ))
         ) : (
           <NoResult
-            title="There’s no tag question saved to show"
+            title="There's no tag question saved to show"
             description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
             link="/ask-question"
             linkTitle="Ask a Question"

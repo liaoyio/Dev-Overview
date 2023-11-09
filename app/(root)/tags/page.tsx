@@ -5,9 +5,10 @@ import { UserFilters } from '@/constants/filter'
 import { getAllTags } from '@/lib/actions/tag.actions'
 import Link from 'next/link'
 import React from 'react'
+import type { SearchParamsProps } from '@/types'
 
-const page = async () => {
-  const result = await getAllTags()
+const page = async ({ searchParams }: SearchParamsProps) => {
+  const result = await getAllTags({ searchQuery: searchParams.q })
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">All Tags</h1>
@@ -34,7 +35,7 @@ const page = async () => {
                 <p className="small-medium text-dark400_light500 mt-3.5 ">
                   <span className="body-semibold primary-text-gradient mr-2.5">
                     {tag.questions.length} +
-                  </span>
+                  </span>{' '}
                   Questions
                 </p>
               </article>
