@@ -10,17 +10,8 @@ import Link from 'next/link'
 import { HomePageFilters } from '@/constants/filter'
 import { getQuestions } from '@/lib/actions/question.action'
 import type { SearchParamsProps } from '@/types'
-import { auth } from '@clerk/nextjs'
-
+import Loading from './loading'
 export default async function Home({ searchParams }: SearchParamsProps) {
-  const { userId } = auth()
-
-  if (!userId) return null
-
-  /*  const result = await getSavedQuestions({
-    clerkId: userId,
-    searchQuery: searchParams.q
-  }) */
   const result = await getQuestions({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
