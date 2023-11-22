@@ -1,14 +1,17 @@
 import Filter from '@/components/shared/Filter'
 import NoResult from '@/components/shared/NoResult'
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar'
-import { UserFilters } from '@/constants/filter'
+import { TagFilters } from '@/constants/filter'
 import { getAllTags } from '@/lib/actions/tag.actions'
 import Link from 'next/link'
 import React from 'react'
 import type { SearchParamsProps } from '@/types'
 
 const page = async ({ searchParams }: SearchParamsProps) => {
-  const result = await getAllTags({ searchQuery: searchParams.q })
+  const result = await getAllTags({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter
+  })
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">All Tags</h1>
@@ -21,7 +24,7 @@ const page = async ({ searchParams }: SearchParamsProps) => {
           otherClasses="flex-1"
         />
 
-        <Filter filters={UserFilters} otherClasses="min-h-[56px] sm:min-w-[170px]" />
+        <Filter filters={TagFilters} otherClasses="min-h-[56px] sm:min-w-[170px]" />
       </div>
 
       <section className="mt-12 flex flex-wrap gap-4">
