@@ -10,7 +10,13 @@ import Link from 'next/link'
 import { HomePageFilters } from '@/constants/filter'
 import { getQuestions } from '@/lib/actions/question.action'
 import type { SearchParamsProps } from '@/types'
-import Loading from './loading'
+
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Home | Next Overflow'
+}
+
 export default async function Home({ searchParams }: SearchParamsProps) {
   const result = await getQuestions({
     searchQuery: searchParams.q,

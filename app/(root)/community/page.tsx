@@ -6,6 +6,13 @@ import { UserFilters } from '@/constants/filter'
 import { getAllUsers } from '@/lib/actions/user.action'
 import React from 'react'
 import type { SearchParamsProps } from '@/types'
+
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Community | Next Overflow'
+}
+
 const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllUsers({
     searchQuery: searchParams.q,
