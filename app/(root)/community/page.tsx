@@ -6,7 +6,11 @@ import { getAllUsers } from '@/lib/actions/user.action'
 import React from 'react'
 import type { SearchParamsProps } from '@/types'
 const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
-  const result = await getAllUsers({ searchQuery: searchParams.q })
+  const result = await getAllUsers({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter
+  })
+
   return (
     <div>
       <h1 className="h1-bold text-dark100_light900">All Users</h1>
