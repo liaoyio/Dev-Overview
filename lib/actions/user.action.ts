@@ -136,7 +136,7 @@ export async function deleteUser(params: DeleteUserParams) {
   }
 }
 
-export async function toggleSavedQuestion(params: ToggleSaveQuestionParams) {
+export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
   try {
     connectToDatabase()
 

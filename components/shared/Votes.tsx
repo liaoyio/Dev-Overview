@@ -2,13 +2,14 @@
 import { downvoteAnswer, upvoteAnswer } from '@/lib/actions/answer.actions'
 import { viewQuestion } from '@/lib/actions/interaction.action'
 import { downvoteQuestion, upvoteQuestion } from '@/lib/actions/question.action'
-import { toggleSavedQuestion } from '@/lib/actions/user.action'
+import { toggleSaveQuestion } from '@/lib/actions/user.action'
 import { formatAndDivideNumber } from '@/lib/utils'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
 
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+
+import { toast } from '../ui/use-toast'
 interface Props {
   type: string
   itemId: string
@@ -33,9 +34,31 @@ const Votes = ({
   const pathname = usePathname()
   const router = useRouter()
 
+  const handleSave = async () => {
+    if (!userId) {
+      return toast({
+        title: 'Please log in',
+        description: 'You must be logged in to perform this action'
+      })
+    }
+    await toggleSaveQuestion({
+      userId: userId && JSON.parse(userId),
+      questionId: JSON.parse(itemId),
+      path: pathname
+    })
+
+    return toast({
+      title: `Question ${!hasSaved ? 'Saved in' : 'Removed from'} your collection`,
+      variant: !hasSaved ? 'default' : 'destructive'
+    })
+  }
+
   const handleVote = async (action: string) => {
     if (!userId) {
-      return
+      return toast({
+        title: 'Please log in',
+        description: 'You must be logged in to perform this action'
+      })
     }
 
     if (action === 'upvote') {
@@ -56,8 +79,10 @@ const Votes = ({
           path: pathname
         })
       }
-      // TODO: show toast
-      return
+      return toast({
+        title: `Upvote ${!hasupVoted ? 'Successful' : 'Removed'}`,
+        variant: !hasupVoted ? 'default' : 'destructive'
+      })
     }
 
     if (action === 'downvote') {
@@ -78,6 +103,10 @@ const Votes = ({
           path: pathname
         })
       }
+      return toast({
+        title: `Downvote ${!hasupVoted ? 'Successful' : 'Removed'}`,
+        variant: !hasupVoted ? 'default' : 'destructive'
+      })
     }
   }
 
@@ -88,13 +117,6 @@ const Votes = ({
     })
   }, [itemId, userId, pathname, router])
 
-  const handleSave = async () => {
-    await toggleSavedQuestion({
-      userId: JSON.parse(userId),
-      questionId: JSON.parse(itemId),
-      path: pathname
-    })
-  }
   return (
     <div className="flex gap-5">
       <div className="flex-center gap-2.5">
