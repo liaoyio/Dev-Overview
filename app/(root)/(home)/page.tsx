@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 import { HomePageFilters } from '@/constants/filter'
-import { getSavedQuestions } from '@/lib/actions/user.action'
 import { getQuestions } from '@/lib/actions/question.action'
 import type { SearchParamsProps } from '@/types'
 import { auth } from '@clerk/nextjs'
