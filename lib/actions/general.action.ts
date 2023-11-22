@@ -6,7 +6,6 @@ import { SearchParams } from './shared'
 import User from '@/database/user.model'
 import Answer from '@/database/answer.model'
 import Tag from '@/database/tag.model'
-import { model } from 'mongoose'
 
 const SearchableTypes = ['question', 'answer', 'user', 'tag']
 export async function globalSearch(params: SearchParams) {
@@ -28,6 +27,7 @@ export async function globalSearch(params: SearchParams) {
     const typeLower = type?.toLowerCase()
 
     if (!typeLower || !SearchableTypes.includes(typeLower)) {
+      // search across everything
       for (const { model, searchField, type } of modelsAndTypes) {
         const queryResults = await model.find({ [searchField]: regexQuery }).limit(2)
 
@@ -40,6 +40,7 @@ export async function globalSearch(params: SearchParams) {
         )
       }
     } else {
+      // search in the specified model
       const modelInfo = modelsAndTypes.find((item) => item.type === type)
       if (!modelInfo) {
         throw new Error('Invalid Search Type')
