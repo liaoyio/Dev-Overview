@@ -2,6 +2,7 @@
 
 import { GlobalSearchFilters } from '@/constants/filter'
 import { formUrlQuery } from '@/lib/utils'
+import { cva } from 'class-variance-authority'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 
@@ -46,11 +47,11 @@ const GlobalFilters = () => {
             type="button"
             key={item.value}
             className={`light-border-2 small-medium :text-light-800 rounded-2xl px-5 py-2 capitalize dark:hover:text-primary-500
-              ${active === item.value
-                ? 'bg-primary-500 text-light-900'
-                : 'bg-light-700 text-dark-400 hover:text-primary-500 dark:bg-dark-500'
-              }
-            `}
+            ${cva({
+              'bg-primary-500 text-light-900': active === item.value,
+              'bg-light-700 text-dark-400 hover:text-primary-500 dark:bg-dark-500':
+                active !== item.value
+            })}`}
             onClick={() => handleTypeClick(item.value)}
           >
             {item.name}
