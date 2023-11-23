@@ -8,12 +8,13 @@ import React from 'react'
 import type { SearchParamsProps } from '@/types'
 
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Community | Next Overflow'
 }
 
-const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
+const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllUsers({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
@@ -29,7 +30,7 @@ const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
           route="/community"
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
-          placeholder="Search for users"
+          placeholder="Search for amazing minds"
           otherClasses="flex-1"
         />
 
@@ -41,6 +42,9 @@ const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
         ) : (
           <div className="paragraph-regular text-dark200_light800 mx-auto max-w-4xl text-center">
             <p>No Users yet</p>
+            <Link href="/sign-up" className="mt-2 font-bold text-accent-blue">
+              Join to be the first!
+            </Link>
           </div>
         )}
       </section>
@@ -54,4 +58,4 @@ const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
   )
 }
 
-export default CommunityPage
+export default Page

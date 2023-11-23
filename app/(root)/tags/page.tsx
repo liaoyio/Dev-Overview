@@ -8,7 +8,7 @@ import Link from 'next/link'
 import React from 'react'
 import type { SearchParamsProps } from '@/types'
 
-const page = async ({ searchParams }: SearchParamsProps) => {
+const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
@@ -40,7 +40,7 @@ const page = async ({ searchParams }: SearchParamsProps) => {
                 <p className="small-medium text-dark400_light500 mt-3.5 ">
                   <span className="body-semibold primary-text-gradient mr-2.5">
                     {tag.questions.length} +
-                  </span>{' '}
+                  </span>
                   Questions
                 </p>
               </article>
@@ -66,4 +66,4 @@ const page = async ({ searchParams }: SearchParamsProps) => {
   )
 }
 
-export default page
+export default Page

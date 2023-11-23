@@ -7,14 +7,14 @@ import { SignedIn } from '@clerk/nextjs'
 import EditDeleteAction from '../shared/EditDeleteAction'
 
 interface QuestionProps {
-  id: string
+  _id: string
   title: string
   tags: {
     _id: string
     name: string
   }[]
   author: {
-    id: string
+    _id: string
     name: string
     picture: string
     clerkId: string
@@ -28,7 +28,7 @@ interface QuestionProps {
 
 const QuestionCard = ({
   clerkId,
-  id,
+  _id,
   title,
   tags,
   author,
@@ -46,7 +46,7 @@ const QuestionCard = ({
           <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
             {getTimeStamp(createdAt)}
           </span>
-          <Link href={`/question/${id}`}>
+          <Link href={`/question/${_id}`}>
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
               {title}
             </h3>
@@ -54,7 +54,7 @@ const QuestionCard = ({
         </div>
         {/* if signed in add edit delete actions */}
         <SignedIn>
-          {showActionButtons && <EditDeleteAction type="Question" itemId={JSON.stringify(id)} />}
+          {showActionButtons && <EditDeleteAction type="Question" itemId={JSON.stringify(_id)} />}
         </SignedIn>
       </div>
 
@@ -70,7 +70,7 @@ const QuestionCard = ({
           alt="user"
           value={author.name}
           title={` - asked ${getTimeStamp(createdAt)}`}
-          href={`/profile/${author.id}`}
+          href={`/profile/${author._id}`}
           isAuthor
           textStyles="body-medium text-dark400_light700"
         />

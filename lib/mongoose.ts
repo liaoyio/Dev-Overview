@@ -16,8 +16,8 @@ export const connectToDatabase = async () => {
       dbName: 'devflow'
     })
     isConnected = true
-    console.log('Mongoose is connected')
+    console.log('MongoDB is connected')
   } catch (error) {
-    console.log('Error connecting to MongoDB')
+    console.log('MongoDB connection failed', error)
   }
 }

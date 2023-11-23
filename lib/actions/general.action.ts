@@ -2,7 +2,7 @@
 
 import Question from '@/database/question.model'
 import { connectToDatabase } from '../mongoose'
-import { SearchParams } from './shared'
+import { SearchParams } from './shared.types'
 import User from '@/database/user.model'
 import Answer from '@/database/answer.model'
 import Tag from '@/database/tag.model'
@@ -10,7 +10,7 @@ import Tag from '@/database/tag.model'
 const SearchableTypes = ['question', 'answer', 'user', 'tag']
 export async function globalSearch(params: SearchParams) {
   try {
-    connectToDatabase()
+    await connectToDatabase()
 
     const { query, type } = params
     const regexQuery = { $regex: query, $options: 'i' }
@@ -40,10 +40,13 @@ export async function globalSearch(params: SearchParams) {
         )
       }
     } else {
-      // search in the specified model
+      // search in the specified model type
       const modelInfo = modelsAndTypes.find((item) => item.type === type)
+
+      console.log({ modelInfo, type })
+
       if (!modelInfo) {
-        throw new Error('Invalid Search Type')
+        throw new Error('Invalid search type')
       }
 
       const queryResults = await modelInfo.model
@@ -59,7 +62,7 @@ export async function globalSearch(params: SearchParams) {
 
     return JSON.stringify(results)
   } catch (error) {
-    console.error(error)
+    console.log(`Error fetching global results, ${error}`)
     throw error
   }
 }

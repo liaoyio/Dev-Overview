@@ -4,6 +4,7 @@ import { Editor } from '@tinymce/tinymce-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
+
 import {
   Form,
   FormControl,
@@ -13,9 +14,12 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
+
+import { QuestionsSchema } from '@/lib/validation'
+
 import { Input } from '@/components/ui/input'
 import { Button } from '../ui/button'
-import { QuestionSchema } from '@/lib/validation'
+
 import { Badge } from '../ui/badge'
 import Image from 'next/image'
 import { createQuestion, editQuestion } from '@/lib/actions/question.action'
@@ -30,20 +34,18 @@ interface Props {
 
 const Question = ({ type, mongoUserId, questionDetails }: Props) => {
   const { mode } = useTheme()
-
   const editorRef = useRef(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
 
-  // if type is Edit, parse the question details
   const parsedQuestionDetails = questionDetails && JSON.parse(questionDetails || '')
 
   const groupedTags = parsedQuestionDetails?.tags.map((tag: any) => tag.name)
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof QuestionSchema>>({
-    resolver: zodResolver(QuestionSchema),
+  const form = useForm<z.infer<typeof QuestionsSchema>>({
+    resolver: zodResolver(QuestionsSchema),
     defaultValues: {
       title: parsedQuestionDetails?.title || '',
       explanation: parsedQuestionDetails?.content || '',
@@ -52,7 +54,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
   })
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof QuestionSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true)
 
     try {
@@ -110,6 +112,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
 
   const handleTagRemove = (tag: string, field: any) => {
     const newTags = field.value.filter((t: string) => t !== tag)
+
     form.setValue('tags', newTags)
   }
 
@@ -216,10 +219,11 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                         <Badge
                           key={tag}
                           className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
-                          onClick={() => (type !== 'Edit' ? handleTagRemove(tag, field) : () => {})}
+                          onClick={() =>
+                            type !== 'Edit' ? handleTagRemove(tag, field) : () => null
+                          }
                         >
                           {tag}
-                          {/* 编辑模式下不显示删除按钮 */}
                           {type !== 'Edit' && (
                             <Image
                               src="/assets/icons/close.svg"

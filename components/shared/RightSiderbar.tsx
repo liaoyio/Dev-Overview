@@ -2,11 +2,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import RenderTag from './RenderTag'
-import { gethotQuestion } from '@/lib/actions/question.action'
+import { getHotQuestions } from '@/lib/actions/question.action'
 import { getTopPopularTags } from '@/lib/actions/tag.actions'
 
 const RightSidebar = async () => {
-  const hotQuestions = await gethotQuestion()
+  const hotQuestions = await getHotQuestions()
   const popularTags = await getTopPopularTags()
 
   return (
@@ -38,7 +38,7 @@ const RightSidebar = async () => {
           {popularTags.map((tag) => (
             <RenderTag
               key={tag._id}
-              id={tag._id}
+              _id={tag._id}
               name={tag.name}
               totalQuestions={tag.numberOfQuestions}
               showCount

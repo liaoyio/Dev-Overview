@@ -11,16 +11,16 @@ const inter = Inter({
   variable: '--font-inter'
 })
 
-const space_Grotesk = Space_Grotesk({
+const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-space-grotesk'
+  variable: '--font-spaceGrotesk'
 })
 
 export const metadata: Metadata = {
   title: 'DevFlow',
   description:
-    'DevFlow is a platform for developers to share their projects and collaborate with others.',
+    'A community-driven platform for asking and answering programming questions. Get help, share knowledge, and collaborate with developers from around the world. Explore topics in web development, mobile app development, algorithms, data structures, and more.',
   icons: {
     icon: '/assets/images/site-logo.svg'
   }
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${space_Grotesk.variable}`}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         <ClerkProvider
           appearance={{
             elements: {

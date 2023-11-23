@@ -7,7 +7,7 @@ import {
   CreateAnswerParams,
   DeleteAnswerParams,
   GetAnswersParams
-} from './shared'
+} from './shared.types'
 
 import { revalidatePath } from 'next/cache'
 
