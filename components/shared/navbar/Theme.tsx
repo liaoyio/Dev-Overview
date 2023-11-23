@@ -14,6 +14,7 @@ import {
 
 import Image from 'next/image'
 import { themes } from '@/constants'
+import { cva } from 'class-variance-authority'
 
 const Theme = () => {
   const { mode, setMode } = useTheme()
@@ -63,8 +64,10 @@ const Theme = () => {
                 className={`${mode === item.value && 'active-theme'}`}
               />
               <p
-                className={`body-semibold text-light-500 ${mode === item.value ? 'text-primary-500' : 'text-dark100_light900'
-                  }`}
+                className={`body-semibold text-light-500 ${cva({
+                  'text-primary-500': mode === item.value,
+                  'text-dark100_light900': mode !== item.value
+                })}`}
               >
                 {item.label}
               </p>

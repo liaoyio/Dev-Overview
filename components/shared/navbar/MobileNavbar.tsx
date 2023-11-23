@@ -17,6 +17,7 @@ import { SignedOut } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 import { sidebarLinks } from '@/constants'
 import { usePathname } from 'next/navigation'
+import { cva } from 'class-variance-authority'
 
 const NavContent = () => {
   const pathname = usePathname()
@@ -29,8 +30,10 @@ const NavContent = () => {
           <SheetClose asChild key={item.route}>
             <Link
               href={item.route}
-              className={`${isActive ? 'primary-gradient rounded-lg text-light-900' : 'text-dark300_light900'
-                } flex items-center justify-start gap-4 bg-transparent p-4`}
+              className={`${cva({
+                'primary-gradient rounded-lg text-light-900': isActive,
+                'text-dark300_light900': !isActive
+              })} flex items-center justify-start gap-4 bg-transparent p-4`}
             >
               <Image
                 src={item.imgURL}

@@ -9,6 +9,6 @@
     "semi": ["error", "never"],
     // 末尾不添加逗号
     "comma-dangle": ["error", "never"],
-    "prettier/prettier": "warn"
+    "prettier/prettier": "error"
   }
 }
