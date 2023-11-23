@@ -20,7 +20,7 @@ const AnswersTab = async ({ searchParams, userId, clerkId }: Props) => {
         <AnswerCard
           key={item._id}
           clerkId={clerkId}
-          id={item._id}
+          _id={item._id}
           question={item.question}
           author={item.author}
           upvotes={item.upvotes.length}
