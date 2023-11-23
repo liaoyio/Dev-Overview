@@ -56,6 +56,7 @@ export const formatAndDivideNumber = (num: number): string => {
 }
 
 export const getJoinedDate = (date: Date): string => {
+  if (!date) return ''
   // Extract the month and year from the Date object
   const month = date.toLocaleString('default', { month: 'long' })
   const year = date.getFullYear()
