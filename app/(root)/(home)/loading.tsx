@@ -24,7 +24,7 @@ const Loading = () => {
       </div>
 
       <div className="my-10 hidden flex-wrap gap-6 md:flex">
-        <Skeleton className="h-9 w-40" />
+        <Skeleton class="h-9 w-40" />
         <Skeleton className="h-9 w-40" />
         <Skeleton className="h-9 w-40" />
         <Skeleton className="h-9 w-40" />
